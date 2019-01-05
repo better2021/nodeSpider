@@ -56,7 +56,7 @@ superagent
     // 并发遍历heroes对象
     async.mapLimit(
       heroes,
-      1,
+      2,
       function(hero, callback) {
         // 对每个角色对象的处理逻辑
         var heroId = hero[0]; // 获取角色数据第一位的数据，即：角色id
@@ -80,7 +80,6 @@ var fetchInfo = function(heroId, callback) {
     .end(function(err, res) {
       // 获取爬到的角色详细页面内容
       var $ = cheerio.load(res.text, { decodeEntities: false });
-
       // 对页面内容进行解析，以收集队长技能为例
       console.log(
         heroId +
