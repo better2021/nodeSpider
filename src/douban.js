@@ -51,7 +51,7 @@ superagent
 
       let json = JSON.stringify(obj); //json格式解析为字符串模式
 
-      fs.writeFile('txt.json', json, 'utf-8', err => {
+      fs.writeFile('./hiDir/txt.json', json, 'utf-8', err => {
         if (err) {
           throw new Error(err);
         }
