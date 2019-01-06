@@ -30,11 +30,14 @@ download(url, function(data) {
         res.on('data', function(chunk) {
           imgData += chunk;
         });
-        console.log(imgData);
         res.on('end', function() {
           var imgPath = '/' + i + '.' + imgSrc.split('.').pop();
-          fs.writeFile('/imgs' + imgPath, imgData, 'binary', function(err) {
-            console.log(err);
+          fs.writeFile('./imgs' + imgPath, imgData, 'binary', err => {
+            if (err) {
+              throw new Error(err);
+            } else {
+              console.log(imgPath);
+            }
           });
         });
       });
