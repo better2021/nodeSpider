@@ -6,7 +6,8 @@ const hostName = '127.0.0.1';
 const port = 8081;
 //创建服务
 let server = http.createServer((req, res) => {
-  res.setHeader('Content-Type', 'text/html');
+  //res.setHeader(200, { 'Content-Type': 'text/html' });
+  res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end('<h1>hello nodejs server!</h1>');
 });
 

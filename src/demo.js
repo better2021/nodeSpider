@@ -68,3 +68,35 @@ fs.stat('./hiDir/message.txt', function(err, stat) {
 //const ws = fs.createWriteStream('./hiDir/message.txt', 'utf-8');
 //让我们用pipe()把一个文件流和另一个文件流串起来，这样源文件的所有数据就自动写入到目标文件里了，所以，这实际上是一个复制文件的程序：
 //rs.pipe(ws);
+
+// const file = fs.createReadStream('./webServe.js', {
+//   encoding: 'utf8'
+// });
+// let content = '';
+// file.on('data', function(chunk) {
+//   console.log(chunk);
+//   content += chunk;
+// });
+// file.on('error', function(err) {
+//   console.log(err);
+// });
+// file.on('end', function(chunk) {
+//   console.log(content, '---');
+// });
+
+// const file = fs
+//   .createReadStream('./webServe.js', {
+//     encoding: 'utf8'
+//   })
+//   .pipe(process.stdout);
+// console.log(file);
+
+fs.readFile('./webServe.js', 'utf-8', function(err, data) {
+  if (err) throw err;
+  console.log(data);
+});
+
+// exports 是模块公开的接口
+exports.world = function() {
+  console.log('hello nodejs');
+};
