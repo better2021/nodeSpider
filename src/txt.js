@@ -55,8 +55,13 @@ const Koa = require('Koa');
 const Router = require('koa-router');
 const App = new Koa();
 const router = Router();
+const fs = require('fs');
+const path = require('path');
 const bodyParser = require('koa-bodyparser');
 App.use(bodyParser()); //使用ctx.body解析中间件 bodyParser()是一个函数
+
+const static = require('koa-static'); // 静态资源服务插件
+const views = require('koa-views'); // 引用 koa-views
 
 // App.use(async (ctx, next) => {
 //   const start = Date.now();
@@ -68,12 +73,29 @@ App.use(bodyParser()); //使用ctx.body解析中间件 bodyParser()是一个函�
 
 // App.listen(3000);
 
+function render(fileName) {
+  let fullPath = path.join(__dirname, `page/${fileName}`); // 用path.join() 方式取得文件的绝对路径
+  console.log(fullPath, '------');
+  return fs.readFileSync(fullPath, 'utf8'); //fs.readFileSync的第一个参数是绝对路劲，第二个参数是编码格式
+}
+
 router.get('/', async ctx => {
-  ctx.body = 'hello Node.js';
+  ctx.body = render('index.html');
 });
 
 router.get('/about', async ctx => {
-  ctx.body = 'About me';
+  // ctx.cookies.get(name, [options]) 读取上下文请求中的cookie
+  // ctx.cookies.set(name, value, [options]) 在上下文中写入cookie
+  ctx.cookies.set('cid', new Date().getDay(), {
+    domain: 'localhost', // 写cookie所在的域名
+    path: '/', // 写cookie所在的路劲
+    maxAge: 10 * 60 * 1000, // cookie有效时长
+    expires: new Date('2019-03-10'), // cookie的失效时间
+    httpOnly: false, // 是否只用于http请求中获取
+    overwrite: false // 是否允许重写
+  });
+  // console.log(ctx.cookies);
+  ctx.body = render('about.html');
 });
 
 router.get('/user', async ctx => {
@@ -84,7 +106,7 @@ router.get('/user', async ctx => {
 });
 
 router.get('/detail', async ctx => {
-  ctx.body = '这是详情页面';
+  ctx.body = '<h3>这是<em>详情页面</em></h3>';
 });
 
 router.get('/login', async ctx => {
@@ -104,8 +126,15 @@ router.post('/login', async ctx => {
   ctx.body = `<p>Welocome,${usr}!</p>`;
 });
 
+const staticPath = './page';
+App.use(static(path.join(__dirname, staticPath)));
+
+// _dirname：目前文件路徑絕對位置
+// extension：要載入的文件后缀名
+App.use(views(__dirname, { extension: 'html' }));
+
 App.use(router.routes());
-console.log(router);
+// console.log(router);
 
 App.listen(3000, () => {
   console.log('端口是3000');

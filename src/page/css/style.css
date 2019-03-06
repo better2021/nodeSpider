@@ -4,8 +4,8 @@
 }
 .box {
   width: 300px;
-  border: 1px #dddddd solid;
-  box-shadow: 3px 3px 5px;
+  border: 1px #f1f1f1 solid;
+  box-shadow: 5px 5px 10px #999999;
   margin: 100px auto;
 }
 .box ul {
