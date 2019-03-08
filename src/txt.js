@@ -63,67 +63,164 @@ App.use(bodyParser()); //使用ctx.body解析中间件 bodyParser()是一个函�
 const static = require('koa-static'); // 静态资源服务插件
 const views = require('koa-views'); // 引用 koa-views
 
-// App.use(async (ctx, next) => {
-//   const start = Date.now();
-//   await next();
-//   const ms = Date.now() - start;
-//   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`); //ctx.method请求方式 ctx.ur请求地址 ms请求所用时间
-//   console.log(App);
-// });
+let MongoClient = require('mongodb').MongoClient;
+let url = 'mongodb://localhost:27017';
 
-// App.listen(3000);
+let options = {
+  useNewUrlParser: true,
+  server: {
+    auto_reconnect: true,
+    poolSize: 10
+  }
+};
 
-function render(fileName) {
-  let fullPath = path.join(__dirname, `page/${fileName}`); // 用path.join() 方式取得文件的绝对路径
-  console.log(fullPath, '------');
-  return fs.readFileSync(fullPath, 'utf8'); //fs.readFileSync的第一个参数是绝对路劲，第二个参数是编码格式
-}
-
-router.get('/', async ctx => {
-  ctx.body = render('index.html');
-});
-
-router.get('/about', async ctx => {
-  // ctx.cookies.get(name, [options]) 读取上下文请求中的cookie
-  // ctx.cookies.set(name, value, [options]) 在上下文中写入cookie
-  ctx.cookies.set('cid', new Date().getDay(), {
-    domain: 'localhost', // 写cookie所在的域名
-    path: '/', // 写cookie所在的路劲
-    maxAge: 10 * 60 * 1000, // cookie有效时长
-    expires: new Date('2019-03-10'), // cookie的失效时间
-    httpOnly: false, // 是否只用于http请求中获取
-    overwrite: false // 是否允许重写
+MongoClient.connect(url, options, function(err, db) {
+  if (err) throw err;
+  console.log('数据库已创建!');
+  let dbase = db.db('admin');
+  let myobj = [
+    { name: '学习芒果数据库', url: 'www.baidu.com', type: 'cn' },
+    { name: '哈哈哈', url: 'www.jd.com', type: 'cn' },
+    { name: 'fdf12121fg', url: 'www.123.com', type: 'en' },
+    { name: 'beautiful girl', url: 'www.123.com', type: 'en' },
+    { name: 'cute girl', url: 'www.haha.com', type: 'en' }
+  ];
+  // 创建集合
+  dbase.createCollection('site', function(err, res) {
+    if (err) throw err;
+    console.log('创建集合!');
+    //db.close();
   });
-  // console.log(ctx.cookies);
-  ctx.body = render('about.html');
-});
 
-router.get('/user', async ctx => {
-  // http://localhost:3000/user?name=feiyu&&msg=哈哈  带参数的请求
-  let name = ctx.query.name;
-  let msg = ctx.query.msg;
-  ctx.body = `<h2>${name}:${msg}</h2>`;
-});
+  // 更新多条数据
+  let whereStr = { type: 'cn' }; // 查询条件
+  let updateStr = { $set: { url: 'https://www.runoob.com' } };
+  dbase.collection('test').updateMany(whereStr, updateStr, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + '条文档被更新');
+    //db.close();
+  });
 
-router.get('/detail', async ctx => {
-  ctx.body = '<h3>这是<em>详情页面</em></h3>';
-});
+  // 删除多条数据
+  // dbase.collection('site').deleteMany(whereStr, (err, obj) => {
+  //   if (err) throw err;
+  //   console.log(obj.result.n + '条数据被删除');
+  //   db.close();
+  // });
 
-router.get('/login', async ctx => {
-  ctx.body = `
-    <form method="POST" action="/login">
-        <label>UserName</label>
-        <input name="usr" /><br/>
-        <button type="submit">submit</button>
-      </form>
-    `;
-});
+  // const mysql = require('mysql'); // 引入数据库
 
-router.post('/login', async ctx => {
-  //console.log(bodyParserm);
-  let usr = ctx.request.body.usr;
-  console.log(ctx.request.body, '666');
-  ctx.body = `<p>Welocome,${usr}!</p>`;
+  // let connection = mysql.createConnection({
+  //   host: 'localhost',
+  //   user: 'root',
+  //   password: '709463253',
+  //   database: 'test'
+  // });
+
+  // connection.connect(function(err) {
+  //   if (err) {
+  //     console.error('连接失败' + err.stack);
+  //     return;
+  //   }
+  //   console.log('连接成功 id' + connection.threadId);
+  // });
+
+  // connection.query(
+  //   'SELECT * FROM Person WHERE username = "whg"',
+  //   (err, results, fields) => {
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //     console.log(results);
+  //   }
+  // );
+
+  // App.use(async (ctx, next) => {
+  //   const start = Date.now();
+  //   await next();
+  //   const ms = Date.now() - start;
+  //   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`); //ctx.method请求方式 ctx.ur请求地址 ms请求所用时间
+  //   console.log(App);
+  // });
+
+  // App.listen(3000);
+
+  function render(fileName) {
+    let fullPath = path.join(__dirname, `page/${fileName}`); // 用path.join() 方式取得文件的绝对路径
+    console.log(fullPath, '------');
+    return fs.readFileSync(fullPath, 'utf8'); //fs.readFileSync的第一个参数是绝对路劲，第二个参数是编码格式
+  }
+
+  router.get('/', async ctx => {
+    ctx.body = render('index.html');
+  });
+
+  router.get('/about', async ctx => {
+    // ctx.cookies.get(name, [options]) 读取上下文请求中的cookie
+    // ctx.cookies.set(name, value, [options]) 在上下文中写入cookie
+    ctx.cookies.set('cid', new Date().getDay(), {
+      domain: 'localhost', // 写cookie所在的域名
+      path: '/', // 写cookie所在的路劲
+      maxAge: 10 * 60 * 1000, // cookie有效时长
+      expires: new Date('2019-03-10'), // cookie的失效时间
+      httpOnly: false, // 是否只用于http请求中获取
+      overwrite: false // 是否允许重写
+    });
+    // console.log(ctx.cookies);
+    ctx.body = render('about.html');
+  });
+
+  router.get('/user', async ctx => {
+    // http://localhost:3000/user?name=feiyu&&msg=哈哈  带参数的请求
+    let name = ctx.query.name;
+    let msg = ctx.query.msg;
+    ctx.body = `<h2>${name}:${msg}</h2>`;
+  });
+
+  router.get('/login', async ctx => {
+    ctx.body = render('login.html');
+  });
+
+  router.post('/login', async ctx => {
+    //console.log(bodyParserm);
+    let usr = ctx.request.body.name;
+    console.log(ctx.request.body, '666');
+    // 新增数据
+    dbase
+      .collection('test')
+      .insertMany([{ name: 'haha', title: usr }], (err, res) => {
+        if (err) throw err;
+        console.log('插入的文档数量为：' + res.insertedCount);
+        // db.close();
+      });
+  });
+
+  dbase
+    .collection('site')
+    .find({})
+    .toArray(function(err, result) {
+      // 返回集合中的所有数据
+      if (err) throw err;
+      console.log(result);
+      router.get('/detail', async ctx => {
+        ctx.body = result;
+      });
+      //db.close();
+    });
+
+  // 首页的数据接口
+  dbase
+    .collection('test')
+    .find({})
+    .toArray(function(err, result) {
+      // 返回集合中的所有数据
+      if (err) throw err;
+      console.log(result, '---');
+      router.get('/menu', async ctx => {
+        ctx.body = result;
+      });
+      //db.close();
+    });
 });
 
 const staticPath = './page';
