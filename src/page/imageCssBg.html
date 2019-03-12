@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>图片改变颜色</title>
+  <style>
+   /* background-blend-mode: lighten; 的使用 */
+      .pic {
+      width: 200px;
+      height: 200px;
+      margin: 50px;
+      text-align: center;
+      font-size: 42px;
+      line-height: 420px;
+      float: left;
+      background-image: url('https://user-images.githubusercontent.com/8554143/34239266-232bdfc0-e641-11e7-8792-408782aaa78e.png');
+      background-size: cover;
+      }
+
+    .pic1 {
+        background-image: url('https://user-images.githubusercontent.com/8554143/34239266-232bdfc0-e641-11e7-8792-408782aaa78e.png'), linear-gradient(#f00, #f00);
+        background-blend-mode: lighten;
+        background-size: cover;
+    }
+
+    .pic2 {
+        background-image: url('https://user-images.githubusercontent.com/8554143/34239266-232bdfc0-e641-11e7-8792-408782aaa78e.png'), linear-gradient(#333, #333);
+        background-blend-mode: lighten;
+        background-size: cover;
+    }
+
+    .pic3 {
+        background-image: url('https://user-images.githubusercontent.com/8554143/34239266-232bdfc0-e641-11e7-8792-408782aaa78e.png'), linear-gradient(#f00, #00f);
+        background-blend-mode: lighten;
+        background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <!-- 使用前提： 图片的底色为白色，主色为黑色 -->
+
+<div class="pic">原图</div>
+<div class="pic pic1">红色</div>
+<div class="pic pic2">灰色</div>
+<div class="pic pic3">渐变色</div>
+</body>
+</html>

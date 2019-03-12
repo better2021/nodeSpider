@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>滴水效果</title>
+  <style type="text/css">
+    html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    filter: blur(3px) contrast(10);
+}
+
+div {
+    position: relative;
+    width: 640px;
+    height: 130px;
+    color: #fff;
+    font-size: 124px;
+    text-align: center;
+    margin: 100px auto;
+    border-bottom: 10px solid #fff;
+    transform: skewY(5deg);
+}
+div::before {
+        position: absolute;
+        content: "";
+        bottom : -20px;
+        width: 10px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fff;
+        transform: translate(0, 0);
+        animation: move 15s ease-in-out infinite;
+    }
+
+div::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom : -20px;
+    width: 10px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(0, 0);
+    animation: move 15s ease-in-out 2s infinite;
+}
+
+@keyframes move {
+    80% {        
+        bottom : -30px;
+        transform: translate(623px, 0);
+    } 93% {
+        transform: translate(623px, 3px);
+        opacity: 1;
+    }100% {
+        transform: translate(623px, 150px);
+        opacity: 0;
+    }
+}
+  </style>
+</head>
+<body>
+  <div>MAGICCSS</div>
+</body>
+</html>
