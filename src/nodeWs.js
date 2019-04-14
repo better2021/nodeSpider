@@ -22,7 +22,7 @@ wss.on('connection', function(ws) {
     });
   });
 });
-
+// console.log(process.argv[1],'66') // 文件路劲
 // 客户端创建WebSocket连接
 let ws = new WebSocket('ws://localhost:3000/test');
 // 打开websocket连接后并发送一条信息
