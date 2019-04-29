@@ -17,6 +17,7 @@
     "bagpipe": "^0.3.5",
     "cheerio": "^1.0.0-rc.2",
     "cookies": "^0.7.3",
+    "crawler": "^1.2.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "7.0.0",

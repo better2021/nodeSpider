@@ -18,8 +18,9 @@ const url = require('url')
  */
 
 let options = {
-  url:'https://www.ivsky.com/', // 请求页面的地址
-  dir:'./PIC01/', // 储存图片的文件夹
+  //url:'https://www.ivsky.com/', // 请求页面的地址
+  url:'https://www.hellorf.com/image/search?q=%E6%98%A5%E5%A4%A9&source=gg',
+  dir:'./PIC02/', // 储存图片的文件夹
   picType:'.png'  // 图片类型
 }
 
