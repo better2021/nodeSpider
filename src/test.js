@@ -41,8 +41,14 @@ console.log("path", path.resolve(__dirname, "../public"))
 //   if (err) throw err
 // })
 
+// 删除文件夹
+// fs.rmdir("./newdir", function(err) {
+//   if (err) throw err
+//   console.log("目录删除成功")
+// })
+
 // 删除文件
-fs.rmdir("./newdir", function(err) {
+fs.unlink("./123.txt", function(err) {
   if (err) throw err
-  console.log("目录删除成功")
+  console.log("文件删除成功")
 })
