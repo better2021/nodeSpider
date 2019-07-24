@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
+    "serve": "nodemon index.js",
+    "tcp": "nodemon src/tcp.js",
+    "dev": "nodemon src/koa_express.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,6 +21,7 @@
     "cheerio": "^1.0.0-rc.2",
     "cookies": "^0.7.3",
     "crawler": "^1.2.1",
+    "express": "^4.17.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "7.0.0",

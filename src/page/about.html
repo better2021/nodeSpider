@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="app">
-      <h1>这是一个关于我们的页面</h1>
+      <h1>这是一个关于我们的页面about us</h1>
       <p>
         Repetition is the mother of all
         learning重复是学习之母。他们将来长大，学知识，技巧、爱情、事业、交流....倘若懂得行动的力量，不怕重复，不怕犯错误，那就大有希望靠近幸福了。
@@ -26,31 +26,30 @@
   <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
   <script>
     new Vue({
-      el: '#app',
+      el: "#app",
       data() {
         return {
           items: []
-        };
+        }
       },
       mounted() {
-        this.getDate();
+        this.getDate()
       },
       methods: {
         getDate() {
-          let self = this;
           $.ajax({
-            url: 'http://localhost:3000/detail',
-            type: 'get',
-            success: function(data) {
-              self.items = data;
-              console.log(self.items);
+            url: "http://localhost:5000/api/users/list",
+            type: "get",
+            success: data => {
+              this.items = data
+              console.log(self.items)
             },
-            error: function(err) {
-              console.log(err);
+            error: err => {
+              console.log(err)
             }
-          });
+          })
         }
       }
-    });
+    })
   </script>
 </html>

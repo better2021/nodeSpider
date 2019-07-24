@@ -48,7 +48,7 @@ console.log("path", path.resolve(__dirname, "../public"))
 // })
 
 // 删除文件
-fs.unlink("./123.txt", function(err) {
-  if (err) throw err
-  console.log("文件删除成功")
-})
+// fs.unlink("./123.txt", function(err) {
+//   if (err) throw err
+//   console.log("文件删除成功")
+// })
