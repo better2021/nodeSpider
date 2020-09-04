@@ -165,7 +165,7 @@ console.log(process.cwd());
 /**
  * rimraf 包的作用：以包的形式包装rm -rf命令，用来删除文件和文件夹的，不管文件夹是否为空，都可删除.
  */
-rm('./src/PIC02', function (err) {
-  if (err) throw err;
-  console.log('删除成功');
-});
+// rm('D:/study/javaStudy', function (err) {
+//   if (err) throw err;
+//   console.log('删除成功');
+// });
