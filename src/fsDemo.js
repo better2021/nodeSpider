@@ -4,6 +4,8 @@
  */
 
 const fs = require('fs');
+const fsExt = require('fs-extra');
+const rm = require('rimraf');
 const path = require('path');
 /**
  * 异步读取,回调函数的第二个参数是代表文件内容的Buffer实例
@@ -113,20 +115,57 @@ let newPath = path.resolve(__dirname, './douban.js');
 console.log(__dirname);
 console.log(__filename);
 console.log(newPath);
+console.log(process.cwd());
 
 /**
  * 删除目录也是必不可少的功能，rmdir函数可以删除指定的目录：
  */
-fs.rmdir(`${__dirname}/testDir`, function (err) {
-  if (err) {
-    fs.unlink(`${__dirname}/testDir`, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('delete ok');
-      }
-    });
-    return;
-  }
-  console.log('删除文件夹成功');
+// fs.rmdir(`${__dirname}/testDir`, function (err) {
+//   if (err) {
+//     fs.unlink(`${__dirname}/testDir`, (err) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log('delete ok');
+//       }
+//     });
+//     return;
+//   }
+//   console.log('删除文件夹成功');
+// });
+
+/**
+ * fs-extra模块是系统fs模块的扩展，提供了更多便利的 API，并继承了fs模块的 API
+ * copy(src, dest, [option],callback) option(boolean): 覆盖现有的文件或目录,默认true
+ * 同步: copySync()
+ */
+// 用copySync()方法同步复制PIC01文件夹的内容到PIC02中
+// fsExt.copySync(
+//   path.resolve(__dirname, './PIC01'),
+//   path.resolve(__dirname, './PIC02')
+// );
+
+// fsExt.copy(
+//   path.resolve(__dirname, './hiDir'),
+//   path.resolve(__dirname, './testDir'),
+//   function (err) {
+//     if (err) throw err;
+//     console.log('复制成功');
+//   }
+// );
+
+/**
+ * emptyDir 清空目录
+ */
+// fsExt.emptyDir('./src/testDir', function (err) {
+//   if (err) throw err;
+//   console.log('文件夹已清空');
+// });
+
+/**
+ * rimraf 包的作用：以包的形式包装rm -rf命令，用来删除文件和文件夹的，不管文件夹是否为空，都可删除.
+ */
+rm('./src/PIC02', function (err) {
+  if (err) throw err;
+  console.log('删除成功');
 });
